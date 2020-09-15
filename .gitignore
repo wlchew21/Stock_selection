@@ -40,3 +40,6 @@ vignettes/*.pdf
 
 # Ignore Data
 /derived_data
+
+# Rproj
+*.Rproj
