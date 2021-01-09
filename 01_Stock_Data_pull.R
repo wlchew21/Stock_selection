@@ -16,7 +16,7 @@ latest.file <- which.max(as.Date(substr(dogs.input.files, 1, 10)))
 
 dogs <- read_csv(file.path("./derived_data/symbols/", dogs.input.files[latest.file]))
 
-# Get hte historical price data
+# Get the historical price data
 stocks <- 
   sapply(dogs$Symbol, possibly(function(x) getSymbols(x, auto.assign = FALSE), otherwise = NULL))
 
