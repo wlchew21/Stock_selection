@@ -53,9 +53,22 @@ library(tidyverse)
 library(lubridate)
 
 # Read in Stock data - list with each object being a stock history data
-list.files("./derived_data/")
-stock.list <- readRDS(paste0("./derived_data/", "2020-09-14", "_stock_scrape_clean.RDS"))
-symbol.key <- read_csv("./derived_data/symbols/2020-09-14_Dogs_of_the_DOW.csv")
+
+## Symbol key
+# Use Dogs of the DOW for more accurate list. 
+dogs.input.files <- list.files("./derived_data/symbols/", pattern = "Dogs")
+
+# Find which one has the most recent pull (naming convention is to use the date as first 10 char)
+latest.file <- which.max(as.Date(substr(dogs.input.files, 1, 10)))
+
+symbol.key <- read_csv(file.path("./derived_data/symbols/", dogs.input.files[latest.file]))
+
+## Stock history
+hist.file <- list.files("./derived_data/", pattern = "clean")
+latest.file.H <- which.max(as.Date(substr(hist.file, 1, 10)))
+stock.list <- readRDS(file.path("./derived_data/", hist.file[latest.file.H]))
+
+
 
 # Export to cluster
 clusterExport(NULL, c('weekly.conversion', 'stock.summary', 'stock.list', 'symbol.key'))

@@ -1,6 +1,7 @@
 ## Author: Bill Chew ##
 ## Date: 09/14/2020  ##
-## Purpose: Pull all ticker symbols that are on the NYSE ###
+## File: 00_NYSE_ticket_scraper.R ##
+## Purpose: Additional method to pull all ticker symbols that are on the NYSE ###
 
 
 ticker.pull <- function(letter){
@@ -41,4 +42,4 @@ all.tickers <-
 pull.date <- Sys.Date()
 
 # output
-write_csv(all.tickers, file.path("./derived_data/NYSE_symbols/", paste0(pull.date, "_NYSE_symbols.csv")))
+write_csv(all.tickers, file.path("./derived_data/symbols/", paste0(pull.date, "_NYSE_symbols.csv")))

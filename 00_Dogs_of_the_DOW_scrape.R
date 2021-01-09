@@ -1,5 +1,6 @@
 ## Author: Bill Chew ##
 ## Date: 09/14/2020  ##
+## File: 00_Dogs_of_the_DOW_scrape.R ##
 ## Purpose: Pull all ticker symbols that are on the NYSE ###
 
 
@@ -41,4 +42,4 @@ all.tickers <-
 pull.date <- Sys.Date()
 
 # output
-write_csv(all.tickers, file.path("./derived_data/NYSE_symbols/", paste0(pull.date, "_Dogs_of_the_DOW.csv")))
+write_csv(all.tickers, file.path("./derived_data/symbols/", paste0(pull.date, "_Dogs_of_the_DOW.csv")))

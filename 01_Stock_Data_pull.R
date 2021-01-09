@@ -1,5 +1,6 @@
 ## Author: Bill Chew ##
 ## Date: 09/14/2020  ##
+## File: 01_Stock_Data_pull.R ##
 ## Purpose: Pull historical stock price on Stock Symbols ###
 
 
@@ -7,14 +8,22 @@ library(tidyverse)
 library(quantmod)
 options("getSymbols.warning4.0"=FALSE)
 
-dogs <- read_csv("./derived_data/symbols/2020-09-14_Dogs_of_the_DOW.csv")
+# Use Dogs of the DOW for more accurate list. 
+dogs.input.files <- list.files("./derived_data/symbols/", pattern = "Dogs")
 
+# Find which one has the most recent pull (naming convention is to use the date as first 10 char)
+latest.file <- which.max(as.Date(substr(dogs.input.files, 1, 10)))
+
+dogs <- read_csv(file.path("./derived_data/symbols/", dogs.input.files[latest.file]))
+
+# Get hte historical price data
 stocks <- 
   sapply(dogs$Symbol, possibly(function(x) getSymbols(x, auto.assign = FALSE), otherwise = NULL))
 
 pull.date <- Sys.Date()
 saveRDS(stocks, paste0("./derived_data/", pull.date,"_stock_scrape_raw.RDS"))
 
+# Preliminary cleaning of the data
 clean.stocks <- 
 lapply(stocks,
        function(x) 
