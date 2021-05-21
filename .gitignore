@@ -38,8 +38,9 @@ vignettes/*.pdf
 # R Environment Variables
 .Renviron
 
-# Ignore Data
+# Ignore Data & system files
 /derived_data
+/system_files
 
 # Rproj
 *.Rproj
