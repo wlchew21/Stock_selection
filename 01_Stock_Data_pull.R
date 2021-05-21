@@ -16,9 +16,27 @@ latest.file <- which.max(as.Date(substr(dogs.input.files, 1, 10)))
 
 dogs <- read_csv(file.path("./derived_data/symbols/", dogs.input.files[latest.file]))
 
+pull_symbols <- function(x){
+  require(tidyverse)
+  require(quantmod)
+  print(paste0("Starting Symbol: ", x))
+  getSymbols(x, auto.assign = FALSE)
+}
+
+library(parallel)
+
+cl <- makeCluster( detectCores() - 1, outfile = "")
+
+clusterExport(cl, ls())
+
 # Get the historical price data
-stocks <- 
-  sapply(dogs$Symbol, possibly(function(x) getSymbols(x, auto.assign = FALSE), otherwise = NULL))
+stocks <-
+  parSapply(cl, dogs$Symbol[1:30], safely(function(x) pull_symbols(x)))
+
+stopCluster(cl)
+
+stocks.copy <- stocks
+stocks <- stocks["result", ]
 
 pull.date <- Sys.Date()
 saveRDS(stocks, paste0("./derived_data/", pull.date,"_stock_scrape_raw.RDS"))
