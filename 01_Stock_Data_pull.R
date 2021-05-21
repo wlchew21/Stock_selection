@@ -31,7 +31,7 @@ clusterExport(cl, ls())
 
 # Get the historical price data
 stocks <-
-  parSapply(cl, dogs$Symbol[1:30], safely(function(x) pull_symbols(x)))
+  parSapply(cl, dogs$Symbol, safely(function(x) pull_symbols(x)))
 
 stopCluster(cl)
 
