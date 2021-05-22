@@ -65,9 +65,10 @@ symbol.key <- read_csv(file.path("./derived_data/symbols/", dogs.input.files[lat
 
 ## Stock history
 hist.file <- list.files("./derived_data/", pattern = "clean")
-latest.file.H <- which.max(as.Date(substr(hist.file, 1, 10)))
+file.dates <- as.Date(substr(hist.file, 1, 10))
+latest.file.H <- which.max(file.dates)
 stock.list <- readRDS(file.path("./derived_data/", hist.file[latest.file.H]))
-
+pull.date <- file.dates[latest.file.H]
 
 
 # Export to cluster
@@ -98,7 +99,7 @@ data.stock.summary <-
 
 
 ## Output The stock summary
-saveRDS(data.stock.summary, paste0("./derived_data/", "2020-09-14", "_stock_summary_stats.RDS"))
+saveRDS(data.stock.summary, paste0("./derived_data/", pull.date, "_stock_summary_stats.RDS"))
 
 # Search through for interesting stocks
 symbol.key %>% 
