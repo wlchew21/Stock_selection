@@ -83,6 +83,10 @@ weekly.stock <-
             plyr::compact(stock.list),
          possibly(weekly.conversion, otherwise = NULL))
 
+## Output The weekly stock data
+saveRDS(weekly.stock, paste0("./derived_data/", pull.date, "_weekly_stock_history.RDS"))
+
+
 # Summary stats
 summarized.stocks <- parLapply(NULL,
                                plyr::compact(weekly.stock),
