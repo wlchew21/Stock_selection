@@ -44,3 +44,6 @@ vignettes/*.pdf
 
 # Rproj
 *.Rproj
+
+# Web links to resources
+resource_links.txt
